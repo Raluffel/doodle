@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<head>
+  <title>
+    Confirm meeting times
+  </title>
+  <style>
+    .grid-container{
+      display:               grid;
+      margin-top:            20px;
+      grid-template-columns: auto 60% 20%;
+      grid-template-rows:    100px 120px 100px 100px auto;
+      grid-row-gap:          20px;
+      grid-column-gap:       40px;
+    }
+    .month{
+      font-size:   130%;
+      font-family: Geneva;
+      height:      50px;
+    }
+    .nav{
+      font-size:    larger;
+      border-style: solid;
+      border-color: rgb(0, 0, 0);
+      font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    a{
+      text-decoration:  none;
+      background-color: #ddd;
+      font-size:        large;
+      color:            black;
+      display:          block;
+      height:           100%;
+      width:            100%;
+    }
+    a:hover{
+      background-color: gray;
+    }
+    .calendar1{
+      grid-row-start:    1;
+      grid-row-end:      3;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .calendar2{
+      grid-row-start:    3;
+      grid-row-end:      5;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .bestand{
+      width:             100%;
+      grid-row-start:    5;
+      grid-row-end:      6;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .numbers{
+      background-color: #ddd;
+      font-size:        large;
+      color:            black;
+    }
+    .numbers:hover{
+      background-color: gray;
+    }
+    .existingNumbers{
+      background-color: #c79;
+      font-size:        large;
+      color:            black;
+    }
+    .existingNumbers:hover{
+      background-color: #c57;
+    }
+    .cal{
+      width:           100%;
+      margin-left:     auto;
+      margin-right:    auto;
+      border-style:    solid;
+      border-collapse: collapse;
+    }
+    .cal td{
+      border-style:    groove;
+      border-collapse: collapse;
+      width:           auto;
+    }
+    .Termine{
+      width:           100%;
+      margin-top:      20px;
+      border-collapse: collapse;
+    }
+    .Termine th{
+      width:            150px;
+      padding-left:     auto;
+      padding-right:    auto;
+    }
+    .Termine td{
+      text-align:   center;
+      border-color: black;
+    }
+    input{
+        cursor: pointer;
+    }
+    .existing{
+      background-color: #111;
+      font-size:        large;
+      color:            black;
+    }
+    .weekdays{
+      background-color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="text-align: center; margin-bottom: 0px;">{{meetingTitle}}</h1>
+  {% if success == "True" %}
+    <h3 style="text-align: center; margin-top: 0px;">successfully edited times.</h3>
+  {% endif %}
+  <div class="grid-container">
+    <div class="calendar1">
+      {% for x in range(monate|length) %}
+        <table class="cal">
+          <tr>
+            <th class="nav">
+              <a href="/doodle/participate/{{ mid }}/{{ uname }}/{{secret}}/{{ prevnext[0][0] }}/{{ prevnext[0][1] }}/{{ 1 }}"><br>&lt<br>prev</a>
+            </th>
+            <th colspan="5" class="month" style="padding-top: 8px;">
+              <b>{{monate[x][0][0]}}</b><br><sup>{{monate[x][0][1]}}</sup>
+            </th>
+            <th class=nav>
+              <a href="/doodle/participate/{{ mid }}/{{ uname }}/{{secret}}/{{ prevnext[1][0] }}/{{ prevnext[1][1] }}/{{ 1 }}"> <br>&gt<br>next</a>
+            </th>
+          </tr>
+          <tr>
+            {% for i in range(monate[x][1]|length) %}
+              <td class="weekdays"><b>{{monate[x][1][i]}}</b></td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% if (7-monate[x][2]|length) > 0 %}
+              <td colspan="{{7-monate[x][2]|length}}"></td>
+            {% endif %}
+            {% for j in range(0, monate[x][2]|length) %}
+              {% if monate[x][2][j] ~ mm[x] ~ monate[x][0][1] in existingDates %}
+                <td class="existingNumbers">{{monate[x][2][j]}}</td>
+              {% else %}
+                <td class="numbers">{{monate[x][2][j]}}</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+          {% for i in range(3, monate[x]|length) %}
+            <tr>
+              {% for j in range(0, monate[x][i]|length) %}
+                {% if monate[x][i][j] ~ mm[x] ~ monate[x][0][1] in existingDates %}
+                  <td class="existingNumbers">{{monate[x][i][j]}}</td>
+                {% else %}
+                  <td class="numbers">{{monate[x][i][j]}}</td>
+                {% endif %}
+              {% endfor %}
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        {% if x == 0 %}
+          <div class="calendar2">
+        {% endif %}
+      {% endfor %}
+
+    <div class="bestand">
+    {% if context|length > 0 %}
+      <form method='POST'>
+          <table class="Termine">
+            <tr>
+              <th class="time">start</th>
+              <th class="time">end</th>
+              <th width="30px">users who agreed</th>
+              <th width="30px">number of participants</th>
+              <th></th>
+            </tr>
+            {% for zeile in range(context|length) %}
+              <tr>
+                {% for eintrag in range(2, context[zeile]|length) %}
+                  <td>{{context[zeile][eintrag]}}</td>
+                {% endfor %}
+                <td>
+                  {% for j in user[zeile] %}
+                    {% if j != user[zeile][user[zeile]|length-1] %}
+                        {{j[0]}},
+                    {% else %}
+                        {{j[0]}}
+                    {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {{userCounts[zeile]}}
+                </td>
+                <td>
+                  {% if context[zeile][0] in agreed %}
+                    <input type="checkbox" name="zeitraum" value="{{context[zeile][0]}}" checked>
+                  {% else %}
+                    <input type="checkbox" name="zeitraum" value="{{context[zeile][0]}}">
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        <input style="margin-top: 20px;" type="submit" placeholder="submit">
+      </form>
+    {% else %}
+      No time created yet.
+    {% endif %}
+  </div>
+</body>

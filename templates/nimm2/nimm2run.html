@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    
+    <body>
+    {% if args['beginn'] <= 0 %}
+        <h1>
+            Du hast gewonnen! Herzlichen Glückwunsch!
+        </h1>
+        
+    
+    {% elif (args['beginn'] - args['pcnimmt']) == 0 %}
+        <h1>
+            Ich habe gewonnen, Noob l2p!
+        </h1>
+    
+    {% else %}
+        <p>
+            Ich habe {{ args['pcnimmt'] }} Hölzer genommen.<br>
+            Es gibt noch {{ args['noch'] }} Hölzer.<br>
+            <br>
+        </p>
+
+        {% for i in range(args['noch']) %}
+            <img src='/public/src/img/streichholz.png' style='margin-left:20px'>
+        {% endfor %}
+
+        <br>
+        <br>
+
+        <form action="/nimm2run?noch={{ args['noch'] }}" method='post'>
+            <label>Wie viele Hölzer willst du nehmen?</label>
+            <input type='text' name='genommen' id='genommen'>
+            <input type='submit' value='Submit'>
+        </form>
+    {% endif %}
+        
+    </body>
+</html>

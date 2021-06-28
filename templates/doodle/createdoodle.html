@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create your very own doodle</title>
+  <style>
+    .wrapper{
+      width:        420px;
+      margin-top:   30px;
+      margin-left:  auto;
+      margin-right: auto;
+      font-size:    large;
+  }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    {% if code == 4321 %}
+      <h3><u>Please fill in all text boxes.</u></h3>
+    {% endif %}
+    <form method="POST">
+      <h2>please enter meeting title.</h2>
+      <input type="text" name="title">
+      <h2>please enter username.</h2>
+      <input type="text" name="uname">
+      <h2>please enter personal password.</h2>
+      <input type="text" name="secret">
+      <input type="submit">
+    </form>
+  </div>
+</body>
+</html>

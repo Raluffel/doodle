@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<head>
+  <title>
+    Select times for your meeting
+  </title>
+  <style>
+    .grid-container{
+      display:               grid;
+      margin-top:            20px;
+      grid-template-columns: auto 60% auto;
+      grid-template-rows:    100px 120px 100px 100px auto;
+      grid-row-gap:          20px;
+      grid-column-gap:       10px;
+    }
+    .sidebar{
+      grid-row-start:    1;
+      grid-row-end:      3;
+      grid-column-start: 3;
+      grid-column-end:   4;
+    }
+    a{
+      text-decoration:  none;
+      font-size:        large;
+      color:            black;
+      display:          block;
+      height:           100%;
+      width:            100%;
+    }
+    .hyperlinkbuttons{
+      background-color: #ddd;
+    }
+    .hyperlinkbuttons:hover{
+      background-color: gray;
+    }
+    .month{
+      font-size:   130%;
+      font-family: Geneva;
+      height:      50px;
+    }
+    .tablehead, tablehead th{
+      border-style:    groove;
+      border-collapse: collapse;
+    }
+    .nav{
+      font-size:    larger;
+      border-style: solid;
+      border-color: rgb(0, 0, 0);
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    .calendar1{
+      grid-row-start:    1;
+      grid-row-end:      3;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .calendar2{
+      grid-row-start:    3;
+      grid-row-end:      5;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .numbers{
+      background-color: #ddd;
+      font-size:        large;
+      color:            black;
+    }
+    .numbers:hover{
+      background-color: gray;
+    }
+    .existingNumbers{
+      background-color: #c79;
+      font-size:        large;
+      color:            black;
+    }
+    .existingNumbers:hover{
+      background-color: #c57;
+    }
+    .cal{
+      width: 100%;
+      margin-left:     auto;
+      margin-right:    auto;
+      border-style:    solid;
+      border-collapse: collapse;
+    }
+    .cal td{
+      border-style:    groove;
+      border-collapse: collapse;
+      width:           auto;
+    }
+    .Termine{
+      width:           100%;
+      margin-top:      10px;
+      border-collapse: collapse;
+    }
+    .Termine th{
+      width:            150px;
+      padding-left:     auto;
+      padding-right:    auto;
+    }
+    .Termine td{
+      border-style: groove;
+      text-align:   center;
+      border-color: black;
+    }
+    .bestand{
+      width:             100%;
+      grid-row-start:    5;
+      grid-row-end:      6;
+      grid-column-start: 2;
+      grid-column-end:   3;
+    }
+    .deletemeeting{
+      border-radius:    15px;
+      width:            100%;
+      height:           100px;
+      background-color: #d00;
+      cursor:           pointer;
+      font-size:        20px;
+    }
+    .deletemeeting:hover{
+      background-color: #c00;
+    }
+    input{
+        cursor: pointer;
+    }
+    .buttonlink{
+      width:            200px;
+      background-color: white;
+    }
+    .copy{
+      margin-top:       20px;
+      background-color: white;
+      width:            70px;
+      height:           25px;
+    }
+    .delbut{
+      float:      right;
+      margin-top: 20px;
+    }
+    .copybox{
+      width: 365px;
+    }
+    .weekdays{
+      background-color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">{{meetingTitle}}</h1>
+  <div class="grid-container">
+    <div class="sidebar">
+      <p>Invite someone!</p>
+      <input class="copybox" type="text" value="{{selfLink}}/doodle/{{mid}}" id="copyMe">
+    </div>
+    <div class="calendar1">
+      {% for x in range(monate|length) %}
+        <table class="cal">
+          <tr>
+            <th class="nav">
+              <a class="hyperlinkbuttons" href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ prevnext[0][0] }}/{{ prevnext[0][1] }}/{{ 1 }}"><br>&lt<br>prev</a>
+            </th>
+            <th colspan="5" class="month" style="padding-top: 8px;">
+              <b>{{monate[x][0][0]}}</b><br><sup>{{monate[x][0][1]}}</sup>
+            </th>
+            <th class=nav>
+              <a class="hyperlinkbuttons" href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ prevnext[1][0] }}/{{ prevnext[1][1] }}/{{ 1 }}"> <br>&gt<br>next</a>
+            </th>
+          </tr>
+          <tr>
+            {% for i in range(monate[x][1]|length) %}
+              <td class="weekdays"><b>{{monate[x][1][i]}}</b></td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% if  (7-monate[x][2]|length) > 0 %}
+              <td colspan="{{7-monate[x][2]|length}}"></td>
+            {% endif %}
+            {% for j in range(0, monate[x][2]|length) %}
+              {% if monate[x][2][j] ~ mm[x] ~ monate[x][0][1] in existingDates %}
+                <td class="existingNumbers"><a href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ monate[x][0][1] }}/{{ mm[x] }}/{{ monate[x][2][j] }}">{{monate[x][2][j]}}</a></td>
+              {% else %}
+                <td class="numbers"><a href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ monate[x][0][1] }}/{{ mm[x] }}/{{ monate[x][2][j] }}">{{monate[x][2][j]}}</a></td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+          {% for i in range(3, monate[x]|length) %}
+            <tr>
+            {% for j in range(0, (monate[x][i]|length)) %}
+              {% if monate[x][i][j] ~ mm[x] ~ monate[x][0][1] in existingDates %}
+                <td class="existingNumbers"><a href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ monate[x][0][1] }}/{{ mm[x] }}/{{ monate[x][i][j] }}">{{monate[x][i][j]}}</a></td>
+              {% else %}
+                <td class="numbers"><a href="/doodle/{{ mid }}/{{ uname }}/{{secret}}/{{ monate[x][0][1] }}/{{ mm[x] }}/{{ monate[x][i][j] }}">{{monate[x][i][j]}}</a></td>
+              {% endif %}
+            {% endfor %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% if x == 0 %}
+        <div class="calendar2">
+      {% endif %}
+    {% endfor %}
+
+    <div class="bestand">
+      <div class="delbut">
+        <a class="buttonlink" href="/doodle/deleteMeeting?mid={{mid}}"><button class="deletemeeting"><b>Delete Meeting</b></button></a>
+      </div>
+      <h2><b>Select time for {{ monate[0][0][0] }} {{ navdate[2] }}, {{ navdate[0] }}</b></h2>
+      <form action='/doodle/{{ mid }}/{{ uname }}/{{ secret }}/{{ navdate[0] }}/{{ navdate[1] }}/{{ navdate[2] }}' method='POST'>
+        <p>Start: <input type="time" name="mystarttime" placeholder="Select time"></p>
+        <p>End: <input type="time" name="myendtime" placeholder="Select time"></p>
+        <input type="submit" name="mysubmit" placeholder="submit" value="Submit">
+      </form>
+        {% if context|length > 0 %}
+          <table class="Termine">
+            <tr>
+              <th class="time">start</th>
+              <th class="time">end</th>
+              <th width="30px">users who agreed</th>
+              <th width="30px">number of participants</th>
+              <th></th>
+            </tr>
+            {% for zeile in range(context|length) %}
+              <tr>
+                {% for eintrag in range(2, context[zeile]|length) %}
+                  <td>{{context[zeile][eintrag]}}</td>
+                {% endfor %}
+                <td>
+                  {% for j in user[zeile] %}
+                    {% if j != user[zeile][user[zeile]|length-1] %}
+                        {{j[0]}},
+                    {% else %}
+                        {{j[0]}}
+                    {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {{userCounts[zeile]}}
+                </td>
+                <td>
+                  <a class="hyperlinkbuttons" href="/doodle/delete?zid={{context[zeile][0]}}&origin=/doodle/{{mid}}/{{uname}}/{{secret}}/{{navdate[0]}}/{{navdate[1]}}/{{navdate[2]}}">Delete Time</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        {% endif %}
+    </div>
+  </div>
+  </div>
+</body>
+<!--       _
+       .__(.)< (MEOW)
+        \___)
+ ~~~~~~~~~~~~~~~~~~-->

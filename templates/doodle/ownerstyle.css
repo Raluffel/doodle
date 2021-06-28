@@ -1,0 +1,55 @@
+.cal{
+  margin-left: auto;
+  margin-right: auto;
+  border-style: groove;
+  border-collapse: collapse;
+}   
+.cal td{
+  border-style: groove;
+  border-collapse: collapse;
+  width: 140px;
+}       
+a{        
+  text-decoration: none;
+  background-color: #ddd;
+  font-size: large;
+  color: black;
+  display: block;
+  width: 100%;
+}       
+.month{   
+  font-size: larger;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height:50px;
+}       
+.tablehead, tablehead th{
+  border-style: groove;
+  border-collapse: collapse;
+}         
+.nav{   
+  font-size: larger;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}         
+.calendar{
+  padding-top: 25px;
+  padding-bottom: 25px;
+} 
+td a:hover{
+  background-color:gray;
+} 
+.select{
+  border-collapse: collapse;
+}   
+.select th{
+  padding-left: 70px;
+  padding-right: 70px; 
+}       
+.select td{
+  text-align: center;
+}
+.bestand{
+  width: 1020px;
+  margin: 0 auto;
+}

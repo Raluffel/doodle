@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <p>
+            Du fängst an.<br>
+            Es gibt noch {{ noch }} Hölzer. Wie viele willst du nehmen?<br><br>
+        </p>
+        
+        {% for i in range(noch) %}
+            <img src='/public/src/img/streichholz.png' style='margin-left:20px'>
+        {% endfor %}
+        
+        <br><br>
+        <a href='/nimrun/{{ noch-1 }}'>Ich nehme 1</a><br>
+        <a href='/nimrun/{{ noch-2 }}'>Ich nehme 2</a><br>
+        <a href='/nimrun/{{ noch-3 }}'>Ich nehme 3</a>
+    </body>
+</html>

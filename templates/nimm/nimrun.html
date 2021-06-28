@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    
+    <body>
+    {% if noch_beginn == 0 %}
+        <h1>
+            Du hast gewonnen! Herzlichen Glückwunsch!
+        </h1>
+        
+    
+    {% elif noch == 0 %}
+        <h1>
+            Ich habe gewonnen, Noob l2p!
+        </h1>
+    
+    {% else %}
+        <p>
+            Ich habe {{pcnimmt}} Hölzer genommen.<br>
+            Es gibt noch {{noch}} Hölzer. Wie viele willst du nehmen?<br>
+            <br>
+        </p>
+
+        {% for i in range(noch) %}
+            <img src='/public/src/img/streichholz.png' style='margin-left:20px'>
+        {% endfor %}
+
+        <br>
+        <br>
+
+        {% for i in range(noch) %}
+            {% if i < 3 %}
+                <a href='/nimrun/{{noch-i-1}}'>Ich nehme {{i+1}}</a><br>      
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+        
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <p>
+            Du fängst an.<br>
+            Es gibt noch {{ noch }} Hölzer.<br><br>
+        </p>
+        
+        {% for i in range(noch) %}
+            <img src='/public/src/img/streichholz.png' style='margin-left:20px'>
+        {% endfor %}
+        
+        <br><br>
+        <form action="/nimm2run?noch={{ noch }}" method='post'>
+            <label>Wie viele Hölzer willst du nehmen?</label>
+            <input type='text' name='genommen' id='genommen'>
+            <input type='submit' value='Submit'>
+        </form>
+    </body>
+</html>

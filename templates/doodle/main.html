@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Doodle</title>
+    <style>
+      a{
+        font-size: large;
+        color:     black;
+        display:   block;
+        width:     100%;
+      }
+      a:hover{
+        color: blue;
+      }
+      .wrapper{
+        width:        400px;
+        margin-top:   20px;
+        margin-left:  auto;
+        margin-right: auto;
+        font-size:    large;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      {% if delete=="Del" %}
+        <h2>Successfully deleted meeting.</h2>
+      {% endif %}
+      <p><a href='/doodle/create'>create Doodle</a></p>
+      <p>
+        <form action="/doodle" method="POST">
+          Join doodle
+          <input type="text" name="link" placeholder="abcdef">
+          <input type="submit">
+        </form>
+      </p>
+    </div>
+  </body>
+</html>

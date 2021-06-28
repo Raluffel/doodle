@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Parameterliste</title>
+    <style>
+      table{
+        border-style:solid;
+        border-width:1px;
+        border-collapse:collapse;
+      }
+      td, th{
+        border-style:solid;
+        border-width:1px;
+        padding-right: 4px;
+        padding-left: 4px;
+      }
+      td{
+        font-family:monospace;
+        text-align:left;
+      }
+      th{
+        font-family:monospace;
+        text-align:left;
+      }
+      b{
+        color:#ff0000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GET-Parameter</h1>
+    <table>
+      {% for key in g %}
+      {% set alle=", ".join(g.getlist(key)) %}
+        <tr><th>{{ key }}</th><td>{{ alle }}</td></tr>
+      {% endfor %}
+    </table>
+    <h1>POST-Parameter</h1>
+    <table>
+      {% for key in p %}
+      {% set alle=", ".join(p.getlist(key)) %}
+        <tr><th>{{ key }}</th><td>{{ alle }}</td></tr>
+      {% endfor %}
+    </table>
+    <!--form action="/parameter" method="post">
+      <input type="text" name="eingabe"/>
+      <input type="submit" name="senden" value="Absenden"/>
+    </form-->
+  </body>
+</html>

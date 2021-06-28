@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{tablename}}</title>
+
+    <style>
+        td {
+            border-style: solid;
+        }
+        table {
+            border-style: solid;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        {% for row in table %}
+            <tr>
+            {% for entry in row %}
+                <td>{{entry|string}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+

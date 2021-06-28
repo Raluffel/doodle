@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabelle auswählen</title>
+</head>
+<body>
+    <h1>
+        Bitte wählen Sie die sehenstwerteste Tabelle:
+    </h1>
+    <ol>
+  {% for table in tabellen %}
+        <li><a href='/database/{{table}}'>{{table}}</a><br></li>
+  {% endfor %}
+    </ol>
+</body>
+</html>
+
